@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jaspic-api">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/by/gsu/epamlab/lib/jaspic-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/by/gsu/epamlab/lib/mysql-connector-java-8.0.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/by/gsu/epamlab/lib/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/by/gsu/epamlab/lib/taglibs-standard-impl-1.2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/by/gsu/epamlab/lib/taglibs-standard-spec-1.2.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

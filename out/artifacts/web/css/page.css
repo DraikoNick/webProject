@@ -1,0 +1,31 @@
+/*style for pages*/
+
+html {
+    font-family: arial;
+}
+
+/*blocks*/
+
+#block {
+    border: 2px solid rgb(195, 0, 255);
+    padding: 10px 15px;
+    vertical-align: top;
+}
+
+/*buttons*/
+
+input[type=button], input[type=submit] {
+    background: rgb(89, 89, 89);
+    color: #fff;
+    line-height: 20px;
+    display: block;
+    border: 0px;
+}
+
+input[type=button]:hover {
+    background: rgb(72, 72, 72);
+}
+
+.error {
+    color: red;
+}

@@ -1,0 +1,41 @@
+/*menu*/
+#menu {
+    width: 100%;
+    list-style: none;
+    padding-left: 0;
+    background: rgb(89, 89, 89);
+    height: 50px;
+}
+a {
+    text-decoration: none;
+    background: rgb(89, 89, 89);
+    color: #fff;
+    padding: 0px 15px;
+    line-height: 50px;
+    display: block;
+}
+a:hover {
+    background: rgb(72, 72, 72);
+}
+#btn {
+    float: left;
+}
+#btnR {
+    float: right;
+}
+
+/*footer*/
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(89, 89, 89);
+    color: white;
+    text-align: center;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
