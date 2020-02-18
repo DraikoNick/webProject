@@ -1,12 +1,8 @@
 package by.gsu.epamlab.model.bin;
 
-import java.util.logging.Logger;
 import static by.gsu.epamlab.model.utils.Constants.*;
 
 public class User implements Comparable<User>{
-
-    private static final Logger LOGGER = Logger.getLogger(User.class.getName());
-
     private int id;
     private String name;
     private String password;

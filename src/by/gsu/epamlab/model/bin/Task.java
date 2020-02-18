@@ -34,17 +34,8 @@ public class Task implements Comparable<Task>{
             this.status = TaskStatusFabric.getTaskStatus(statusName);
             this.userId = userId;
             setDate(date);
-        }catch (DaoException e){
-            throw new DaoException(ERROR_INIT_TASK + e.getMessage());
-        }
-    }
-    public Task(int id, String name, String date, int statusId, int userId) throws DaoException {
-        try{
-            setDate(date);
-            this.userId = userId;
-            this.status = TaskStatusFabric.getTaskStatus(statusId);
-        }catch (DaoException e){
-            throw new DaoException(ERROR_INIT_TASK + e.getMessage());
+        }catch (ParseException e){
+            throw new DaoException(ERR_PARSE_DATE + e.getMessage());
         }
     }
     public Task(int id, String name, String date, String statusName, int userId, String fileName) throws DaoException {
@@ -58,20 +49,16 @@ public class Task implements Comparable<Task>{
     public void setName(String name) {
         this.name = name;
     }
-    public void setDate(String date) throws DaoException {
+    public void setDate(String date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_RU_PATTERN);
         java.util.Date uDate = null;
         try {
-            try {
-                uDate = sdf.parse(date);
-            } catch (ParseException e) {
-                sdf = new SimpleDateFormat(DATE_SQL_PATTERN);
-                uDate = sdf.parse(date);
-            }
-            this.date = new Date(uDate.getTime());
-        }catch (ParseException e){
-            throw new DaoException(e.getMessage());
+            uDate = sdf.parse(date);
+        } catch (ParseException e) {
+            sdf = new SimpleDateFormat(DATE_SQL_PATTERN);
+            uDate = sdf.parse(date);
         }
+        this.date = new Date(uDate.getTime());
     }
     public void setDate(Date date) {
         this.date = date;

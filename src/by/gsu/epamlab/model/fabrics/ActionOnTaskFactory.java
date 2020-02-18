@@ -29,6 +29,19 @@ public class ActionOnTaskFactory {
                 taskDAO.updateTask(task);
             }
         },
+        DELETE0{    //delete forever, without restore
+            @Override
+            void doActionOnTask(Task task, TaskDAO taskDAO) throws DaoException {
+                taskDAO.deleteTask(task);
+            }
+        },
+        RESTORE{
+            @Override
+            void doActionOnTask(Task task, TaskDAO taskDAO) throws DaoException {
+                task.setStatus(TaskStatusFabric.TaskStatus.TODO);
+                taskDAO.updateTask(task);
+            }
+        },
         ADD{
             @Override
             void doActionOnTask(Task task, TaskDAO taskDAO) throws DaoException {
@@ -39,6 +52,7 @@ public class ActionOnTaskFactory {
     }
     public static void doActionWithTasks(String action, List<Task> tasks, TaskDAO taskDAO) throws DaoException {
         ActionKind actionKind = ActionKind.valueOf(toUpperCase(action));
+        System.out.println(actionKind.toString());
         for(Task task:tasks){
             actionKind.doActionOnTask(task, taskDAO);
         }

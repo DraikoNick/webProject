@@ -1,6 +1,17 @@
 package by.gsu.epamlab.model.utils;
 
 public class ConstantsJSP {
+    //sections factory constants
+    public final static String DONE_KEY = "Done";
+    public final static String DONE_VAL = DONE_KEY.toUpperCase();
+    public final static String CHANGE_KEY = "Change";
+    public final static String CHANGE_VAL = CHANGE_KEY.toUpperCase()+0;
+    public final static String DELETE_KEY = "Delete";
+    public final static String DELETE_VAL = DELETE_KEY.toUpperCase();
+    public final static String DELETE_0_KEY = "Delete Without Restore";
+    public final static String DELETE_0_VAL = DELETE_VAL+0;
+    public final static String RESTORE_KEY = "Restore";
+    public final static String RESTORE_VAL = RESTORE_KEY.toUpperCase();
     //logs
     public final static String LOG_FILE = "WEB_PROJECT_LOGS.log";
     public final static String LOG_PATH = "logs/";
@@ -18,9 +29,12 @@ public class ConstantsJSP {
     public final static String URL_ACTIONS = "/actions/*";
     public final static String URL_ACTION_ADD = "/actionAdd";
     public final static String URL_ACTION_CHANGE = "/actionChange";
-    public final static String URL_ACTION_CHANGE0 = "/actionChange0";
-    public final static String URL_ACTION_DONE = "/actionDone";
-    public final static String URL_ACTION_DELETE = "/actionDelete";
+    public final static String URL_ACTION_CHANGE0 = "/actionCHANGE0";
+    public final static String URL_ACTION_DONE = "/actionDONE";
+    public final static String URL_ACTION_DELETE = "/actionDELETE";
+    public final static String URL_ACTION_RESTORE = "/actionRestore";
+    public final static String URL_ACTION_RESTORE_HI = "/actionRESTORE";
+    public final static String URL_ACTION_DELETE0 = "/actionDELETE0";
     public final static String URL_LOGIN = "/login";
     public final static String URL_MAIN = "/main";
     public final static String URL_LOGOUT = "/logout";
@@ -43,6 +57,7 @@ public class ConstantsJSP {
     public final static String PAR_LIST_TYPE = "list_type";
     public final static String TYPE_TODAY = "today";
     public final static String REFERER_NAME = "referer";
+    public final static String CHANGE0 = "CHANGE0";
     public final static String PAR_ERROR = "error";
     public final static String PAR_USERNAME_L = "usernameLogin";
     public final static String PAR_PASSWORD_L = "passwordLogin";
@@ -50,16 +65,12 @@ public class ConstantsJSP {
     public final static String PAR_PASSWORD_R = "passwordRegistration";
     public final static String PAR_EMAIL_R = "email";
     public final static String PAR_USER = "user";
-    public final static String PAR_TASKS_ALL = "alltasks";
     public final static String PAR_TASKS = "tasks";
-    public final static String PAR_TODAY = TYPE_TODAY;
-    public final static String PAR_TOMORROW = "tomorrow";
     public final static String PAR_PRESSED = "pressed_button";
-    public final static String PAR_CHANGED = "CHANGE0";
     public final static String PAR_TASKS_TO_CHANGE = "taskstochange";
     public final static String PAR_IDS = "idTask";
     public final static String PAR_FILE = "file";
-    public final static String PAR_TASK_NAME = "taskName";
-    public final static String PAR_TASK_DATE = "taskDate";
-    public final static String PAR_TASK_STATUS = "taskStatus";
+    public final static String PAR_SECTIONS_MAP = "sectionsMap";
+    public final static String PAR_BUTTONS_TASK = "taskButtons";
+    public final static String PAR_BUTTONS_SECTION = "sectionButtons";
 }

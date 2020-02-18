@@ -10,4 +10,5 @@ public interface TaskDAO {
     public void insertTask(Task task) throws DaoException;
     public List<Task> getTasks(User user) throws DaoException;
     public void updateTask(Task task) throws DaoException;
+    public void deleteTask(Task task) throws DaoException;
 }

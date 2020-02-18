@@ -12,6 +12,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static by.gsu.epamlab.model.utils.Constants.MSG_FILTER;
+import static by.gsu.epamlab.model.utils.Constants.MSG_LOGIN;
 import static by.gsu.epamlab.model.utils.ConstantsJSP.*;
 
 @WebFilter({URL_ACTIONS, URL_MAIN, URL_DOWNLOAD})
@@ -22,7 +25,7 @@ public class TypedUrlFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request; 
 		HttpServletResponse httpResponse = (HttpServletResponse) response; 
 		String refferer = httpRequest.getHeader(REFERER_NAME);
-		LOGGER.log(Level.INFO, refferer);
+		LOGGER.log(Level.INFO, MSG_FILTER + refferer);
 		if (refferer == null) {
 			httpResponse.sendRedirect(httpRequest.getContextPath());
 			return;

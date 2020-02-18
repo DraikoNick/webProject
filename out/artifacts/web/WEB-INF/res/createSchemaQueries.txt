@@ -1,36 +1,16 @@
 CREATE DATABASE `web` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
-CREATE TABLE `task_status` (
-  `status_id` int(11) NOT NULL AUTO_INCREMENT,
-  `status_name` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`status_id`),
-  UNIQUE KEY `status_name_UNIQUE` (`status_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `web`.`task_status`
-(`status_id`, `status_name`)
-VALUES ('1', 'TODO');
-
-INSERT INTO `web`.`task_status`
-(`status_id`, `status_name`)
-VALUES ('2', 'FIXED');
-
-INSERT INTO `web`.`task_status`
-(`status_id`, `status_name`)
-VALUES ('3', 'DELETED');
-
 CREATE TABLE `tasks` (
   `tasks_id` int(11) NOT NULL AUTO_INCREMENT,
   `tasks_name` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `tasks_date` date NOT NULL,
-  `status_id` int(11) NOT NULL,
+  `tasks_status` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
+  `filename` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`tasks_id`),
   KEY `user_id_idx` (`user_id`),
-  KEY `status_id_idx` (`status_id`),
-  CONSTRAINT `status_id` FOREIGN KEY (`status_id`) REFERENCES `task_status` (`status_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -40,4 +20,4 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `user_name_UNIQUE` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

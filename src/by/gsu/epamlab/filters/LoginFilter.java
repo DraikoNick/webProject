@@ -14,6 +14,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import static by.gsu.epamlab.model.utils.Constants.MSG_FILTER;
+import static by.gsu.epamlab.model.utils.Constants.MSG_LOGIN;
 import static by.gsu.epamlab.model.utils.ConstantsJSP.*;
 
 @WebFilter({URL_ACTIONS, URL_MAIN, URL_DOWNLOAD})
@@ -25,7 +28,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
         User user = (User) session.getAttribute(PAR_USER);
-        LOGGER.log(Level.INFO, PAR_USER);
+        LOGGER.log(Level.INFO, MSG_FILTER + MSG_LOGIN + user.getName());
         if (user == null) {
             session.invalidate();
             HttpServletResponse httpResponse = (HttpServletResponse) response;

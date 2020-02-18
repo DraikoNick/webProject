@@ -1,6 +1,7 @@
 package by.gsu.epamlab.controllers;
 
 import by.gsu.epamlab.model.bin.User;
+import by.gsu.epamlab.model.db.ConnectorDB;
 import by.gsu.epamlab.model.exceptions.*;
 import by.gsu.epamlab.model.fabrics.UserDaoFabric;
 import by.gsu.epamlab.model.interfaces.UserDAO;
@@ -39,22 +40,23 @@ public class LoginController extends HttpServlet {
             UserDAO userDao = UserDaoFabric.getDaoFromFabric(properties);
             String username = req.getParameter(PAR_USERNAME_L);
             String password = req.getParameter(PAR_PASSWORD_L);
-            Optional<User> optionalUser = Optional.ofNullable(userDao.getUser(username, password));
+            Optional<User> optionalUser = Optional.ofNullable(
+                    userDao.getUser(username, password));
             if(optionalUser.isPresent()){
                 User user = optionalUser.get();
                 HttpSession session = req.getSession();
                 session.setAttribute(PAR_USER, user);
-                LOGGER.log( Level.INFO, user.getName() + MSG_USER_LOGIN);
+                LOGGER.log( Level.INFO, MSG_LOGIN + user.getName());
                 resp.sendRedirect(req.getContextPath() + URL_MAIN + JSP_LIST_TYPE + TYPE_TODAY);
-            }else{
-                String messageToLog = ERROR_USER + username + ERROR_NOT_REGISTERED;
-                req.setAttribute(PAR_ERROR, messageToLog);
-                LOGGER.log( Level.WARNING, messageToLog);
-                req.getRequestDispatcher(JSP_INDEX_LOGIN).forward(req, resp);
+                return;
             }
-        }catch ( DaoException e){
+            String messageToLog = ERR_USER_NOT_REGISTERED + username;
+            req.setAttribute(PAR_ERROR, messageToLog);
+            LOGGER.log( Level.WARNING, messageToLog);
+            req.getRequestDispatcher(JSP_INDEX_LOGIN).forward(req, resp);
+        }catch (DaoException e){
             LOGGER.log( Level.SEVERE, e.toString(), e);
-            throw new ServletException(ERROR_SERVER);
+            throw new ServletException(ERR_SERVER);
         }
     }
 
@@ -66,10 +68,11 @@ public class LoginController extends HttpServlet {
         try {
             properties.load(input);
             input.close();
+            ConnectorDB.setProperties(properties);
             config.getServletContext().setAttribute(PROPERTIES_NAME, properties);
         } catch (IOException e) {
             LOGGER.log( Level.SEVERE, e.toString(), e);
-            throw new ServletException(ERROR_INIT_PROPERTIES + propertiesName);
+            throw new ServletException(ERR_INIT_PROPERTIES);
         }
     }
 }

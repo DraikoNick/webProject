@@ -83,9 +83,15 @@ public class TaskImplDaoMemory implements TaskDAO {
         tasks.sort(new TaskIdComparator());
         int index = Collections.binarySearch(tasks, task, new TaskIdComparator());
         Task taskOld = tasks.get(index);
-        System.err.println(taskOld + " " + task);
         taskOld = task;
-        System.err.println(taskOld);
+    }
+
+    @Override
+    public void deleteTask(Task task) throws DaoException {
+        LOGGER.log( Level.WARNING, task.toString());
+        tasks.sort(new TaskIdComparator());
+        int index = Collections.binarySearch(tasks, task, new TaskIdComparator());
+        tasks.remove(index);
     }
 
 }

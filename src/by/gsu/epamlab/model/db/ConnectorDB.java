@@ -5,6 +5,7 @@ import by.gsu.epamlab.model.utils.Loggers;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import static by.gsu.epamlab.model.db.DBConstants.*;
 
 public class ConnectorDB {
     private static final Logger LOGGER = Loggers.init(ConnectorDB.class.getName());
+    private static Properties properties;
 
     private String dbUrl;
     private String user;
@@ -24,16 +26,31 @@ public class ConnectorDB {
         this.password = password;
     }
 
+    public static void setProperties(Properties properties) {
+        ConnectorDB.properties = properties;
+    }
+
     public static void init() throws InitException{
-        init(DB_PROPERTIES);
+        if(properties == null){
+            init(DB_PROPERTIES);    //default properties
+        }else{
+            init(properties);
+        }
+    }
+
+    public static void init(Properties properties) throws InitException {
+        String dbUrl = properties.getProperty(DB_URL);
+        String user = properties.getProperty(DB_USER);
+        String password = properties.getProperty(DB_PASS);
+        init(dbUrl, user, password);
     }
 
     public static void init(String pathToProperties) throws InitException{
         ResourceBundle resource = ResourceBundle.getBundle(pathToProperties);
-        String url = resource.getString(DB_URL);
+        String dbUrl = resource.getString(DB_URL);
         String user = resource.getString(DB_USER);
-        String pass = resource.getString(DB_PASS);
-        init(url, user, pass);
+        String password = resource.getString(DB_PASS);
+        init(dbUrl, user, password);
     }
 
     public static void init(String dbUrl, String user, String password) throws InitException{

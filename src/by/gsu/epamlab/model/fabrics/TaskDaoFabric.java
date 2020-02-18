@@ -38,7 +38,7 @@ public class TaskDaoFabric {
             return taskDAOImplKind.getImpl();
         }catch (IllegalArgumentException e){
             LOGGER.log( Level.SEVERE, e.toString(), e);
-            throw new DaoException(ERROR_SERVER);
+            throw new DaoException(e.getMessage());
         }
     }
 }

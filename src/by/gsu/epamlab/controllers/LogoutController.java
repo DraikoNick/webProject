@@ -23,8 +23,8 @@ public class LogoutController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = req.getSession(false);
         User user = (User) session.getAttribute(PAR_USER);
-        LOGGER.log( Level.INFO, user.toString() + MSG_USER_LOGOUT);
         session.invalidate();
+        LOGGER.log( Level.INFO, MSG_LOGOUT + user.getName());
         resp.sendRedirect(URL_PROJECT_WEB + JSP_INDEX);
     }
 }

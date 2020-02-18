@@ -3,7 +3,6 @@ package by.gsu.epamlab.model.utils;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import static by.gsu.epamlab.model.utils.Constants.DATE_RU_PATTERN;
 import static by.gsu.epamlab.model.utils.Constants.DATE_SQL_PATTERN;
 
@@ -16,14 +15,15 @@ public class TimeUtils {
         return new Date(date.getTime() + days);
     }
 
-    public static final String formatDate(Date date){
+    public static final String formatDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_SQL_PATTERN);
         java.util.Date uDate = null;
         try{
             uDate = sdf.parse(date.toString());
         }catch (ParseException e){
-            System.err.println(e.getMessage());
             //never thrown
+            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         SimpleDateFormat sdfRu = new SimpleDateFormat(DATE_RU_PATTERN);
         return sdfRu.format(uDate);

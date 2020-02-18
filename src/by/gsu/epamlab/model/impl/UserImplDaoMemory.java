@@ -31,13 +31,17 @@ public class UserImplDaoMemory implements UserDAO {
     }
 
     @Override
-    public int insertUser(User user){
-        LOGGER.log( Level.INFO, user.toString());
-        synchronized (this){
-            user.setId(lastId++);
-            users.add(user);
-            return user.getId();
+    public User insertUser(User user){
+        synchronized (this) {
+            if (getUser(user.getName(), user.getPassword()) == null) {
+                user.setId(lastId++);
+                users.add(user);
+            } else {
+                user = null;
+            }
         }
+        LOGGER.log( Level.INFO, user.toString());
+        return user;
     }
 
     @Override

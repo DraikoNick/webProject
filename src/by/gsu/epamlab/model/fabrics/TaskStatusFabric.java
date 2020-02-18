@@ -11,21 +11,13 @@ public class TaskStatusFabric {
         TaskStatus(int id){
             this.id = id;
         }
-        public void setId(int id) {
-            this.id = id;
-        }
-        public int getId() {
-            return id;
-        }
     }
 
     public static TaskStatus getTaskStatus(String statusName){
-        return TaskStatus.valueOf(statusName);
-    }
-
-    public static TaskStatus getTaskStatus(int statusId){
-        TaskStatus taskStatus = TaskStatus.TODO;
-        taskStatus.setId(statusId);
-        return taskStatus;
+        try{
+            return TaskStatus.valueOf(statusName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return TaskStatus.TODO;
+        }
     }
 }

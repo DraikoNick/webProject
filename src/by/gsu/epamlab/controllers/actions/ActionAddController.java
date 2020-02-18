@@ -5,10 +5,10 @@ import by.gsu.epamlab.model.bin.User;
 import by.gsu.epamlab.model.exceptions.DaoException;
 import by.gsu.epamlab.model.fabrics.ActionOnTaskFactory;
 import by.gsu.epamlab.model.fabrics.TaskDaoFabric;
-import by.gsu.epamlab.model.impl.TaskImplDaoDB;
 import by.gsu.epamlab.model.utils.FileUpDownLoadUtils;
 import by.gsu.epamlab.model.utils.Loggers;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletException;
@@ -16,7 +16,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -34,8 +33,9 @@ public class ActionAddController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Properties properties = (Properties) req.getServletContext().getAttribute(PROPERTIES_NAME);
-            ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
-            List<FileItem> items = upload.parseRequest(req);
+            List<FileItem> items = new ServletFileUpload(
+                    new DiskFileItemFactory())
+                    .parseRequest(req);
             Iterator<FileItem> iter = items.iterator();
             iter.next();
             String taskName = iter.next().getString();  //PAR_TASK_NAME
@@ -43,16 +43,16 @@ public class ActionAddController extends HttpServlet {
             String fileName = FileUpDownLoadUtils
                     .doUpload(items, properties.getProperty(PROPERTIES_USERS_DATA));
             User user = (User) req.getSession().getAttribute(PAR_USER);
-            List<Task> tasksToChange = new ArrayList<>();
             Task task = new Task(0,taskName,taskDate,TODO.toString(),user.getId(),fileName);
+            List<Task> tasksToChange = new ArrayList<>();
             tasksToChange.add(task);
             ActionOnTaskFactory
                     .doActionWithTasks(ADD.toString(), tasksToChange, TaskDaoFabric.getDaoFromFabric(properties));
-            LOGGER.log( Level.INFO, task.toString());
+            LOGGER.log( Level.INFO, MSG_TASK_ADDED + task.toString());
             resp.sendRedirect(req.getContextPath() + URL_MAIN + JSP_LIST_TYPE + TYPE_TODAY);
-        }catch (DaoException | Exception e){
+        }catch (DaoException | FileUploadException e){
             LOGGER.log( Level.SEVERE, e.toString(), e);
-            throw new ServletException(ERROR_SERVER);
+            throw new ServletException(ERR_SERVER + e.getMessage());
         }
     }
 }

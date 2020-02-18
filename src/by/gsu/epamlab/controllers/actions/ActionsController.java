@@ -22,30 +22,35 @@ import java.util.logging.Logger;
 import static by.gsu.epamlab.model.utils.Constants.*;
 import static by.gsu.epamlab.model.utils.ConstantsJSP.*;
 
-@WebServlet({URL_ACTION_DONE, URL_ACTION_DELETE})
+@WebServlet({URL_ACTION_DONE, URL_ACTION_DELETE, URL_ACTION_RESTORE, URL_ACTION_DELETE0, URL_ACTION_CHANGE0, URL_ACTION_RESTORE_HI})
 public class ActionsController extends HttpServlet {
     private static final Logger LOGGER = Loggers.init(ActionsController.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
-            Properties properties = (Properties) req.getServletContext().getAttribute(PROPERTIES_NAME);
-            TaskDAO taskDao = TaskDaoFabric.getDaoFromFabric(properties);
             HttpSession session = req.getSession();
             User user = (User) session.getAttribute(PAR_USER);
-            List<Task> tasks = taskDao.getTasks(user);
+            Properties properties = (Properties) req.getServletContext().getAttribute(PROPERTIES_NAME);
+            TaskDAO taskDao = TaskDaoFabric.getDaoFromFabric(properties);
             int[] checkedTasks = Arrays.stream(req.getParameterValues(PAR_IDS))
                     .mapToInt(Integer::parseInt)
                     .toArray();
-            List<Task> tasksToChange = ActionOnTaskFactory.getTasksFromListByIds(checkedTasks, tasks);
+            List<Task> tasksToChange = ActionOnTaskFactory.getTasksFromListByIds(checkedTasks, taskDao.getTasks(user));
             session.setAttribute(PAR_TASKS_TO_CHANGE, tasksToChange);
+            LOGGER.log( Level.INFO, MSG_TASK_CHANGING + tasksToChange.toString());
             String actionName = req.getParameter(PAR_PRESSED).toUpperCase();
+            if(actionName.compareTo(CHANGE0)==0){
+                resp.sendRedirect(req.getContextPath() + JSP_ACTION + JSP_ACTION_CHANGE);
+                return;
+            }
             ActionOnTaskFactory.doActionWithTasks(actionName, tasksToChange, TaskDaoFabric.getDaoFromFabric(properties));
-            LOGGER.log( Level.INFO, actionName + DELIMITER_TAB + tasksToChange.toString());
+            LOGGER.log( Level.INFO, MSG_TASK_CHANGED + actionName + DELIMITER_TAB + tasksToChange.toString());
             resp.sendRedirect(req.getContextPath() + URL_MAIN + JSP_LIST_TYPE + TYPE_TODAY);
-        }catch (DaoException | Exception e){
+            return;
+        }catch (DaoException e){
             LOGGER.log( Level.SEVERE, e.toString(), e);
-            throw new ServletException(ERROR_SERVER);
+            throw new ServletException(ERR_SERVER);
         }
     }
 }

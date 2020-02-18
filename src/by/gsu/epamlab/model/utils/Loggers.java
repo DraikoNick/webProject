@@ -5,11 +5,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import static by.gsu.epamlab.model.utils.ConstantsJSP.LOG_FILE;
-import static by.gsu.epamlab.model.utils.ConstantsJSP.LOG_PATH;
+import static by.gsu.epamlab.model.utils.ConstantsJSP.*;
 
 public class Loggers {
-
     private static FileHandler loggerHandler;
 
     static {
